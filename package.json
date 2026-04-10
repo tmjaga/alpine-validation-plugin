@@ -1,0 +1,29 @@
+{
+  "name": "alpine-validation-plugin",
+  "version": "1.0.0",
+  "description": "Lightweight class-based form validation plugin for Alpine.js v3",
+  "main": "src/validation-alpine.js",
+  "type": "module",
+  "keywords": [
+    "alpinejs",
+    "alpine",
+    "alpine-plugin",
+    "validation",
+    "form-validation",
+    "form",
+    "plugin"
+  ],
+  "author": "",
+  "license": "MIT",
+  "peerDependencies": {
+    "alpinejs": ">=3.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tmjaga/alpine-validation-plugin.git"
+  },
+  "bugs": {
+    "url": "https://github.com/tmjaga/alpine-validation-plugin/issues"
+  },
+  "homepage": "https://github.com/tmjaga/alpine-validation-plugin#readme"
+}
