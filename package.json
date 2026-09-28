@@ -20,7 +20,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/tmjaga/alpine-validation-plugin.git"
+    "url": "git+https://github.com/tmjaga/alpine-validation-plugin.git"
   },
   "bugs": {
     "url": "https://github.com/tmjaga/alpine-validation-plugin/issues"
