@@ -39,19 +39,15 @@ Errors are stored reactively and keyed by the input's `name` / `id` / `data-fiel
 
 ```html
 <form x-data x-validate="{ live: true }" @submit.prevent="$validate() && save()">
+    <input class="req email" name="email" title="Email" />
+    <span x-text="$formValidation.errors.email" class="text-red-500 text-sm"></span>
 
-  <input class="req email" name="email" title="Email" />
-  <span x-text="$validation.errors.email" class="text-red-500 text-sm"></span>
+    <input class="req int unsigned" name="age" title="Age" />
+    <span x-text="$formValidation.errors.age" class="text-red-500 text-sm"></span>
 
-  <input class="req int unsigned" name="age" title="Age" />
-  <span x-text="$validation.errors.age" class="text-red-500 text-sm"></span>
+    <p x-show="$formValidation.hasErrors" class="text-red-600">Please fix the errors above.</p>
 
-  <p x-show="$validation.hasErrors" class="text-red-600">
-    Please fix the errors above.
-  </p>
-
-  <button type="submit" :disabled="$validation.hasErrors">Save</button>
-
+    <button type="submit" :disabled="$formValidation.hasErrors">Save</button>
 </form>
 ```
 
@@ -59,28 +55,29 @@ Errors are stored reactively and keyed by the input's `name` / `id` / `data-fiel
 
 ## Built-in rules
 
-| Class | Description |
-|---|---|
-| `req` | Required (whitespace-only counts as empty) |
-| `email` | Valid email address |
-| `int` | Integer (positive or negative) |
-| `float` | Floating point number |
-| `decimal` | Decimal number |
-| `unsigned` | No negative sign allowed |
-| `nonzero` | Value must not be zero |
+| Class      | Description                                |
+| ---------- | ------------------------------------------ |
+| `req`      | Required (whitespace-only counts as empty) |
+| `email`    | Valid email address                        |
+| `int`      | Integer (positive or negative)             |
+| `float`    | Floating point number                      |
+| `decimal`  | Decimal number                             |
+| `unsigned` | No negative sign allowed                   |
+| `nonzero`  | Value must not be zero                     |
 
 ---
 
 ## Live validation modes
 
-| Directive | When errors appear |
-|---|---|
-| `x-validate` | On submit only |
-| `x-validate="{ live: 'input' }"` | From the first keystroke |
-| `x-validate="{ live: true }"` | On blur, then update while typing |
-| `x-validate="{ live: 'blur' }"` | On blur only |
+| Directive                        | When errors appear                |
+| -------------------------------- | --------------------------------- |
+| `x-validate="{ live: 'input' }"` | From the first keystroke          |
+| `x-validate="{ live: true }"`    | On blur, then update while typing |
+| `x-validate="{ live: 'blur' }"`  | On blur only                      |
 
 ---
+
+> **Note:** By default (vithout x-validate directive), validation runs only when `$validate()` is called.
 
 ## Documentation
 

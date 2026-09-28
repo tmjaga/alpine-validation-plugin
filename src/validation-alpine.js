@@ -14,7 +14,7 @@
  * Quick example:
  *   <form x-data x-validate="{ live: true }" @submit.prevent="$validate() && save()">
  *     <input class="req email" name="email" title="Email" />
- *     <span x-text="$store.validation.errors.email"></span>
+ *     <span x-text="$store.formValidation.errors.email"></span>
  *     <button type="submit">Save</button>
  *   </form>
  */
@@ -78,8 +78,8 @@ const AlpineValidation = (Alpine) => {
     return null;
   }
 
-  // ── Alpine store: $store.validation ─────────────────────────────────────────
-  Alpine.store('validation', {
+  // ── Alpine store: $store.formValidation ─────────────────────────────────────────
+  Alpine.store('formValidation', {
 
     /** Reactive map of field errors: { fieldKey: 'Error message', ... } */
     errors:  {},
@@ -101,8 +101,8 @@ const AlpineValidation = (Alpine) => {
      * Can also be called manually when you need fine-grained control:
      *
      *   <input name="title"
-     *          @blur="$validation.touch('title', $el)"
-     *          @input="$validation.touched.title && $validation.touch('title', $el)" />
+     *          @blur="$formValidation.touch('title', $el)"
+     *          @input="$formValidation.touched.title && $formValidation.touch('title', $el)" />
      *
      * @param {string} fieldKey  — name / id / data-field value of the input
      * @param {Element} el       — the input element
@@ -116,7 +116,7 @@ const AlpineValidation = (Alpine) => {
      * Validate a single field and update errors[fieldKey].
      * Useful when you want to re-check one field programmatically:
      *
-     *   this.$validation.validateField('price', document.getElementById('price'));
+     *   this.$formValidation.validateField('price', document.getElementById('price'));
      *
      * @param {string} fieldKey
      * @param {Element} el
@@ -183,8 +183,8 @@ const AlpineValidation = (Alpine) => {
     /**
      * Clear errors (and touched state) for one field or all fields.
      *
-     *   $validation.clearErrors()          // clear everything
-     *   $validation.clearErrors('email')   // clear only email
+     *   $formValidation.clearErrors()          // clear everything
+     *   $formValidation.clearErrors('email')   // clear only email
      *
      * @param {string|null} field
      */
@@ -203,7 +203,7 @@ const AlpineValidation = (Alpine) => {
     /**
      * Add or overwrite one or more rules.
      *
-     *   $store.validation.addRules({
+     *   $store.formValidation.addRules({
      *     phone: { regexp: /^\+?\d{10,}$/, msg: 'Invalid phone number' },
      *     slug:  { regexp: /^[a-z0-9-]+$/, msg: 'Only lowercase letters, numbers and hyphens' },
      *   });
@@ -217,7 +217,7 @@ const AlpineValidation = (Alpine) => {
     /**
      * Remove rules by class name.
      *
-     *   $store.validation.delRules('nonzero', 'unsigned');
+     *   $store.formValidation.delRules('nonzero', 'unsigned');
      *
      * @param {...string} classNames
      */
@@ -234,7 +234,7 @@ const AlpineValidation = (Alpine) => {
      * Register a global additional check.
      * Called after a rule fails; if it returns true the error is suppressed.
      *
-     *   $store.validation.addCheck((el, rule) => {
+     *   $store.formValidation.addCheck((el, rule) => {
      *     // e.g. skip validation for hidden fields
      *     return el.closest('[hidden]') !== null;
      *   });
@@ -283,7 +283,7 @@ const AlpineValidation = (Alpine) => {
 
     if (!expression) return;
 
-    const store      = Alpine.store('validation');
+    const store      = Alpine.store('formValidation');
     const getOptions = evaluateLater(expression);
     let   live       = false;
 
@@ -346,22 +346,22 @@ const AlpineValidation = (Alpine) => {
       while (root && !root.hasAttribute('x-validate')) {
         root = root.parentElement;
       }
-      return Alpine.store('validation').validate(root || document);
+      return Alpine.store('formValidation').validate(root || document);
     };
   });
 
-  // ── $validation magic ─────────────────────────────────────────────────────────
+  // ── $formValidation magic ─────────────────────────────────────────────────────
   //
-  // Shorthand for $store.validation. Available inside any Alpine component.
+  // Shorthand for $store.formValidation. Available inside any Alpine component.
   //
   // Usage:
-  //   $validation.errors.email        — error message for the email field
-  //   $validation.hasErrors           — true if any error is present
-  //   $validation.touched.email       — true if email field was blurred at least once
-  //   $validation.clearErrors()       — reset all errors and touched state
-  //   $validation.clearErrors('email')— reset only the email field
+  //   $formValidation.errors.email        — error message for the email field
+  //   $formValidation.hasErrors           — true if any error is present
+  //   $formValidation.touched.email       — true if email field was blurred at least once
+  //   $formValidation.clearErrors()       — reset all errors and touched state
+  //   $formValidation.clearErrors('email')— reset only the email field
   //
-  Alpine.magic('validation', () => Alpine.store('validation'));
+  Alpine.magic('formValidation', () => Alpine.store('formValidation'));
 };
 
 // ── Export ────────────────────────────────────────────────────────────────────
